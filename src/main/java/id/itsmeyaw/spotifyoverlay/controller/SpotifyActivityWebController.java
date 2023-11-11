@@ -1,7 +1,6 @@
 package id.itsmeyaw.spotifyoverlay.controller;
 
 import id.itsmeyaw.spotifyoverlay.dto.SpotifyActivity;
-import id.itsmeyaw.spotifyoverlay.dto.SpotifyPlaybackData;
 import id.itsmeyaw.spotifyoverlay.service.SpotifyActivityService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -54,12 +53,12 @@ public class SpotifyActivityWebController {
     }
 
     @GetMapping("/spotify/{secret}/data")
-    public @ResponseBody SpotifyPlaybackData spotifyPlaybackData(
+    public @ResponseBody String spotifyPlaybackData(
             @PathVariable("secret") String secret
     ) {
-        SpotifyPlaybackData data = spotifyActivityService.getSpotifyPlaybackData(secret);
+        String data = spotifyActivityService.getSpotifyPlaybackData(secret);
 
-        log.info("Got data {}", data.toString());
+        log.info("Got data {}", data);
 
         return data;
     }

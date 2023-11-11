@@ -1,7 +1,6 @@
 package id.itsmeyaw.spotifyoverlay.service;
 
 import id.itsmeyaw.spotifyoverlay.dto.SpotifyActivity;
-import id.itsmeyaw.spotifyoverlay.dto.SpotifyPlaybackData;
 import id.itsmeyaw.spotifyoverlay.repository.SpotifyActivitiesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -36,7 +35,7 @@ public class SpotifyActivityService {
         return this.spotifyActivitiesRepository.getSpotifyActivityFromSecret(secret);
     }
 
-    public SpotifyPlaybackData getSpotifyPlaybackData(String secret) {
+    public String getSpotifyPlaybackData(String secret) {
         SpotifyActivity activity = this.spotifyActivitiesRepository.getSpotifyActivityFromSecret(secret);
 
         HttpHeaders headers = new HttpHeaders();
@@ -46,11 +45,11 @@ public class SpotifyActivityService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<SpotifyPlaybackData> response = restTemplate.exchange(
+        ResponseEntity<String> response = restTemplate.exchange(
                 "https://api.spotify.com/v1/me/player",
                 HttpMethod.GET,
                 request,
-                SpotifyPlaybackData.class
+                String.class
         );
 
         return switch (response.getStatusCode().value()) {
