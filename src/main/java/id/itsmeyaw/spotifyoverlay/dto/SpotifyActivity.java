@@ -1,7 +1,12 @@
 package id.itsmeyaw.spotifyoverlay.dto;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -9,10 +14,17 @@ import java.util.Base64;
 
 @Data
 @Slf4j
+@Entity
+@NoArgsConstructor
 public class SpotifyActivity {
-    private final String userId;
+    private String userId;
+
     private String userAccessToken;
-    private final String secretUrl;
+
+    @Id
+    @GeneratedValue(generator = "secret-generator")
+    @GenericGenerator(name = "secret-generator", type = id.itsmeyaw.spotifyoverlay.util.SecretStringGenerator.class)
+    private String secretUrl;
 
     public SpotifyActivity(String userId, String userAccessToken) {
         this.userId = userId;
