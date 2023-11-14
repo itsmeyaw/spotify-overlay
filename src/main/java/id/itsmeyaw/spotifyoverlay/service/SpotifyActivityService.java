@@ -26,6 +26,7 @@ public class SpotifyActivityService {
 
         if (activity != null) {
             activity.setUserAccessToken(userAccessToken);
+            this.spotifyActivitiesRepository.save(activity);
             return activity;
         } else {
             return this.spotifyActivitiesRepository.save(new SpotifyActivity(userId, userAccessToken));
