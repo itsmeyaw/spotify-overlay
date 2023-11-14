@@ -2,6 +2,7 @@ package id.itsmeyaw.spotifyoverlay.controller;
 
 import id.itsmeyaw.spotifyoverlay.dto.SpotifyActivity;
 import id.itsmeyaw.spotifyoverlay.service.SpotifyActivityService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -38,7 +39,7 @@ public class SpotifyActivityWebController {
 
         SpotifyActivity activity = spotifyActivityService.newSpotifyActivity(userId, userAccessToken);
 
-        model.addAttribute("secret", activity.getSecretUrl());
+        model.addAttribute("secret", activity.getSecret());
 
         return "spotify";
     }
@@ -54,11 +55,17 @@ public class SpotifyActivityWebController {
 
     @GetMapping("/spotify/{secret}/data")
     public @ResponseBody String spotifyPlaybackData(
-            @PathVariable("secret") String secret
+            @PathVariable("secret") String secret,
+            HttpServletResponse response
     ) {
         String data = spotifyActivityService.getSpotifyPlaybackData(secret);
-
         log.info("Got data {}", data);
+
+        if (data == null) {
+            log.warn("Cannot find spotify activity for secret {}", secret);
+            response.setStatus(404);
+            return null;
+        }
 
         return data;
     }

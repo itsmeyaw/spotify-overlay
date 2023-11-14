@@ -24,7 +24,7 @@ public class SpotifyActivity {
     @Id
     @GeneratedValue(generator = "secret-generator")
     @GenericGenerator(name = "secret-generator", type = id.itsmeyaw.spotifyoverlay.util.SecretStringGenerator.class)
-    private String secretUrl;
+    private String secret;
 
     public SpotifyActivity(String userId, String userAccessToken) {
         this.userId = userId;
@@ -43,6 +43,6 @@ public class SpotifyActivity {
         byte[] randomBytes = new byte[64];
         random.nextBytes(randomBytes);
 
-        this.secretUrl = Base64.getUrlEncoder().encodeToString(randomBytes);
+        this.secret = Base64.getUrlEncoder().encodeToString(randomBytes);
     }
 }

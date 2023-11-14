@@ -20,10 +20,12 @@ spring:
             user-name-attribute: display_name
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
   datasource:
     driver-class-name: org.sqlite.JDBC
-    username: sqlite
-    password: sqlite
+    username:
+    password:
     url: jdbc:sqlite:./data/database.db
 
 hibernate:

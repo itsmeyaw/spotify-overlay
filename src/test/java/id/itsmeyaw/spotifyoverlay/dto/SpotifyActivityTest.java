@@ -1,7 +1,9 @@
 package id.itsmeyaw.spotifyoverlay.dto;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SpotifyActivityTest {
     @Test
@@ -10,7 +12,7 @@ public class SpotifyActivityTest {
 
         assertEquals(sut.getUserId(), "testUserId");
         assertEquals(sut.getUserAccessToken(), "testUserAccessToken");
-        assertTrue(sut.getSecretUrl().length() > 20);
-        System.out.println("Secure URL is: " + sut.getSecretUrl());
+        assertTrue(sut.getSecret().length() > 20);
+        System.out.println("Secure URL is: " + sut.getSecret());
     }
 }
