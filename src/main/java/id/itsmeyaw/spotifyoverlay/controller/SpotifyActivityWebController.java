@@ -61,7 +61,8 @@ public class SpotifyActivityWebController {
             @PathVariable("secret") String secret,
             HttpServletResponse response
     ) throws JsonProcessingException {
-        String data = null;
+        String data;
+        
         try {
             data = spotifyActivityService.getSpotifyPlaybackData(secret);
         } catch (SpotifyOverlayException e) {
