@@ -26,6 +26,7 @@ dependencies {
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.xerial:sqlite-jdbc'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.16.0'
     implementation 'org.hibernate.orm:hibernate-core:6.3.1.Final'
     implementation 'org.hibernate.orm:hibernate-community-dialects'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

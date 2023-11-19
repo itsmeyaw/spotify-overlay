@@ -1,6 +1,9 @@
 package id.itsmeyaw.spotifyoverlay.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import id.itsmeyaw.spotifyoverlay.dto.SpotifyActivity;
+import id.itsmeyaw.spotifyoverlay.exceptions.SpotifyOverlayException;
 import id.itsmeyaw.spotifyoverlay.service.SpotifyActivityService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -57,8 +60,15 @@ public class SpotifyActivityWebController {
     public @ResponseBody String spotifyPlaybackData(
             @PathVariable("secret") String secret,
             HttpServletResponse response
-    ) {
-        String data = spotifyActivityService.getSpotifyPlaybackData(secret);
+    ) throws JsonProcessingException {
+        String data = null;
+        try {
+            data = spotifyActivityService.getSpotifyPlaybackData(secret);
+        } catch (SpotifyOverlayException e) {
+            response.setStatus(e.getStatusCode());
+            return new ObjectMapper().writeValueAsString(e);
+        }
+
         log.info("Got data {}", data);
 
         if (data == null) {

@@ -1,6 +1,7 @@
 package id.itsmeyaw.spotifyoverlay.service;
 
 import id.itsmeyaw.spotifyoverlay.dto.SpotifyActivity;
+import id.itsmeyaw.spotifyoverlay.exceptions.SpotifyOverlayException;
 import id.itsmeyaw.spotifyoverlay.repository.SpotifyActivitiesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -67,7 +68,7 @@ public class SpotifyActivityService {
                 }
                 case 401 -> {
                     log.error("401 Error: User {} needs to re-authenticate", activity.getUserId());
-                    yield null;
+                    throw new SpotifyOverlayException(401, "Reauthentication required");
                 }
                 case 403 -> {
                     log.error("403 Error: Bad OAuth request with request: {}", request);
